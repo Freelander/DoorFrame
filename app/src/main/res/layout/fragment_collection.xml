@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_bar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--
+        columnWidth、numColumns、stretchMode的属性取值。
+        这样在计算GridView的列数时，先根据宽度看看能放几列，
+        然后把多余的空间平均分配到每列中。 这样列数和宽度的问题就解决了
+        -->
+        <GridView
+            android:id="@+id/collection_gv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:columnWidth="150dp"
+            android:stretchMode="columnWidth"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="insideOverlay">
+        </GridView>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/detail_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#eeeeee"
+            android:visibility="invisible"
+            android:contentDescription="用来展示图片的viewpager"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+

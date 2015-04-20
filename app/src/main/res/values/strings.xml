@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">DoorFrame</string>
+
+    <string name="tab_hot">热门</string>
+    <string name="tab_diy">DIY</string>
+
+    <string name="tab_collection">收藏</string>
+
+    <string name="tab_settings">设置</string>
+    <string name="hot_settings">热门区设置</string>
+    <string name="collection_settings">收藏区设置</string>
+    <string name="images_settings">图片设置</string>
+    <string name="door_frame_images_settings">门框图片设置</string>
+    <string name="door_images_settings">门图片设置</string>
+
+    <string name="tab_sort">分类</string>
+    <string name="sort_door">门</string>
+    <string name="sort_door_frame">门框</string>
+</resources>
