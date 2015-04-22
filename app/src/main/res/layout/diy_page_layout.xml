@@ -6,9 +6,8 @@
     <com.display.doorframe.ui.widget.MyHorizontalScrollView
         android:id="@+id/horizontalScrollView_top"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="bottom"
+        android:layout_height="70dp"
+        android:gravity="top"
         android:background="@android:color/white"
         android:scrollbars="none">
 
@@ -25,8 +24,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="#0000">
+        android:layout_weight="1">
+
 
         <ImageView
             android:id="@+id/door_img"
@@ -34,26 +33,28 @@
             android:layout_height="match_parent"
             android:layout_margin="15dp"
             android:scaleType="fitCenter"
-            android:contentDescription="@string/sort_door_frame"
-            android:src="@drawable/ic_door_frame"
-            android:background="#0000"/>
+            android:contentDescription="@string/sort_door_frame"/>
         <ImageView
             android:id="@+id/door_frame_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
             android:scaleType="fitCenter"
-            android:contentDescription="@string/sort_door"
-            android:src="@drawable/ic_door"
-            android:background="#0000"/>
+            android:contentDescription="@string/sort_door"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/diy_img"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:contentDescription="@string/tab_diy"/>-->
 
         </FrameLayout>
 
     <com.display.doorframe.ui.widget.MyHorizontalScrollView
         android:id="@+id/horizontalScrollView_bottom"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="70dp"
         android:gravity="bottom"
         android:background="@android:color/white"
         android:scrollbars="none">

@@ -2,7 +2,6 @@ package com.display.doorframe.ui.fragment;
 
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -15,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.display.doorframe.R;
 import com.display.doorframe.adapter.BigPicViewPagerAdapter;
@@ -108,8 +108,9 @@ public class HotFragment extends Fragment {
 
 
         doorImage = (ImageView) pager2.findViewById(R.id.door_img);
+        doorImage.setImageResource(R.drawable.ic_door);
         doorFrameImage = (ImageView) pager2.findViewById(R.id.door_frame_img);
-        doorFrameImage.setBackgroundColor(Color.TRANSPARENT);
+
         doorFrameHorizontalScrollView = (MyHorizontalScrollView) pager2.findViewById(R.id.horizontalScrollView_top);
         doorHorizontalScrollView = (MyHorizontalScrollView) pager2.findViewById(R.id.horizontalScrollView_bottom);
 
@@ -229,26 +230,27 @@ public class HotFragment extends Fragment {
     //MyHorizontalScroollView 监听事件
     public void MyHorizontalScrollViewListener(){
 
-        doorFrameHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
-            @Override
-            public void onCurrentImgChanged(int position, View viewIndicator) {
-                doorFrameImage.setImageResource(doorFramePicIds[position]);
-                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);//设置图片为透明的
-            }
-        });
+//        doorFrameHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
+//            @Override
+//            public void onCurrentImgChanged(int position, View viewIndicator) {
+////                doorFrameImage.setImageResource(doorFramePicIds[position]);
+////                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);//设置图片为透明的
+//            }
+//        });
 
-        doorHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
-            @Override
-            public void onCurrentImgChanged(int position, View viewIndicator) {
-                doorImage.setImageResource(doorPicIds[position]);
-            }
-        });
+//        doorHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
+//            @Override
+//            public void onCurrentImgChanged(int position, View viewIndicator) {
+////                doorImage.setImageResource(doorPicIds[position]);
+//            }
+//        });
 
         doorFrameHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
                 doorFrameImage.setImageResource(doorFramePicIds[position]);
-                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);
+
+                Toast.makeText(view.getContext(),"点击门框"+position+"",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -257,7 +259,9 @@ public class HotFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 doorImage.setImageResource(doorPicIds[position]);
+                Toast.makeText(view.getContext(),"点击门"+position+"",Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }
