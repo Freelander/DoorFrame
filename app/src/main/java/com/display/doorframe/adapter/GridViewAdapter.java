@@ -93,34 +93,9 @@ public class GridViewAdapter extends BaseAdapter {
 //        });
         return imageView;
 
-//        final ViewHolder viewHolder;
-//        if(convertView == null){
-//            viewHolder = new ViewHolder();
-//            convertView = mLayoutInflater.inflate(R.layout.gridview_item_layout,null);
-//
-//            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.hot_image);
-//
-//            convertView.setTag(viewHolder);
-//        }else{
-//            viewHolder = (ViewHolder) convertView.getTag();
-//        }
-//        viewHolder.imageView.setImageResource(picIds[position]);
-//        viewHolder.imageView.setTag(picIds[position]);
-//        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //当前drawable的res的id
-//                int id = (Integer)v.getTag();
-//                setViewPagerAndZoom(viewHolder.imageView,position);
-//            }
-//        });
-//
-//        return convertView;
     }
 
-//    public class ViewHolder{
-//        private ImageView imageView;
-//    }
+
 
     public void setViewPagerAndZoom(View v ,int position) {
         //得到要放大展示的视图界面

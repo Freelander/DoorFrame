@@ -2,6 +2,7 @@ package com.display.doorframe.ui.fragment;
 
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -11,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.display.doorframe.R;
 import com.display.doorframe.adapter.BigPicViewPagerAdapter;
 import com.display.doorframe.adapter.GridViewAdapter;
+import com.display.doorframe.adapter.HorizontalScrollViewAdapter;
 import com.display.doorframe.adapter.ViewPagerAdapter;
+import com.display.doorframe.ui.widget.MyHorizontalScrollView;
 import com.display.doorframe.utils.ZoomTutorial;
 
 import java.util.ArrayList;
@@ -35,6 +39,28 @@ public class HotFragment extends Fragment {
     private LinearLayout hotTextBg,diyTextBg;
     private View view;
     private GridView gridView;
+
+    private MyHorizontalScrollView doorHorizontalScrollView,doorFrameHorizontalScrollView;
+    private HorizontalScrollViewAdapter horizontalScrollViewAdapter,horizontalScrollViewAdapter1;
+    private ImageView doorImage,doorFrameImage;
+    private Integer[] doorPicIds = {
+            R.drawable.ic_door,R.drawable.ic_door,
+            R.drawable.ic_door,R.drawable.ic_door,
+            R.drawable.ic_door,R.drawable.ic_door,
+            R.drawable.ic_door,R.drawable.ic_door,
+            R.drawable.ic_door,R.drawable.ic_door,
+            R.drawable.ic_door,R.drawable.ic_door
+
+    };
+    private Integer[] doorFramePicIds = {
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame
+
+    };
 
     private View pager1,pager2;
 
@@ -69,7 +95,6 @@ public class HotFragment extends Fragment {
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new ViewPagerChangeListener());
 
-
         gridView = (GridView) pager1.findViewById(R.id.hot_gv);
         gridView.setAdapter(new GridViewAdapter(view.getContext(),hotPicIds,hotLargePicIds));
 
@@ -80,6 +105,20 @@ public class HotFragment extends Fragment {
                 setViewPagerAndZoom(view,position);
             }
         });
+
+
+        doorImage = (ImageView) pager2.findViewById(R.id.door_img);
+        doorFrameImage = (ImageView) pager2.findViewById(R.id.door_frame_img);
+        doorFrameImage.setBackgroundColor(Color.TRANSPARENT);
+        doorFrameHorizontalScrollView = (MyHorizontalScrollView) pager2.findViewById(R.id.horizontalScrollView_top);
+        doorHorizontalScrollView = (MyHorizontalScrollView) pager2.findViewById(R.id.horizontalScrollView_bottom);
+
+        horizontalScrollViewAdapter = new HorizontalScrollViewAdapter(view.getContext(),doorFramePicIds);
+        doorFrameHorizontalScrollView.initDatas(horizontalScrollViewAdapter);
+        horizontalScrollViewAdapter1 = new HorizontalScrollViewAdapter(view.getContext(),doorPicIds);
+        doorHorizontalScrollView.initDatas(horizontalScrollViewAdapter1);
+        MyHorizontalScrollViewListener();
+
         return view;
     }
 
@@ -124,10 +163,6 @@ public class HotFragment extends Fragment {
         hotTextBg = (LinearLayout) view.findViewById(R.id.tab_hot_bg);
         diyTextBg = (LinearLayout) view.findViewById(R.id.tab_diy_bg);
 
-
-
-//        gridView = (GridView) view.findViewById(R.id.hot_gv);
-//        gridView.setAdapter(new GridViewAdapter(view.getContext()));
 
         //给两个TabTitle设置点击事件
         hotText.setOnClickListener(new TabClickListener(0));
@@ -191,4 +226,38 @@ public class HotFragment extends Fragment {
         }
     }
 
+    //MyHorizontalScroollView 监听事件
+    public void MyHorizontalScrollViewListener(){
+
+        doorFrameHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
+            @Override
+            public void onCurrentImgChanged(int position, View viewIndicator) {
+                doorFrameImage.setImageResource(doorFramePicIds[position]);
+                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);//设置图片为透明的
+            }
+        });
+
+        doorHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
+            @Override
+            public void onCurrentImgChanged(int position, View viewIndicator) {
+                doorImage.setImageResource(doorPicIds[position]);
+            }
+        });
+
+        doorFrameHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                doorFrameImage.setImageResource(doorFramePicIds[position]);
+                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
+
+        doorHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                doorImage.setImageResource(doorPicIds[position]);
+            }
+        });
+    }
 }
