@@ -15,7 +15,7 @@ import com.display.doorframe.R;
 import com.display.doorframe.ui.fragment.CollectionFragment;
 import com.display.doorframe.ui.fragment.HotFragment;
 import com.display.doorframe.ui.fragment.SettingsFragment;
-import com.display.doorframe.ui.fragment.SortFragment;
+import com.display.doorframe.ui.fragment.CategoryFragment;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private CollectionFragment collectionFragment;
     private HotFragment hotFragment;
-    private SortFragment sortFragment;
+    private CategoryFragment categoryFragment;
     private SettingsFragment settingsFragment;
 
     private FragmentManager fragmentManager;
@@ -126,13 +126,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case 2:
-                if(sortFragment == null){
+                if(categoryFragment == null){
                     // 如果HotFragment为空，则创建一个并添加到界面上
-                    sortFragment = new SortFragment();
-                    transaction.add(R.id.content,sortFragment);
+                    categoryFragment = new CategoryFragment();
+                    transaction.add(R.id.content, categoryFragment);
                 }else{
                     transaction
-                            .show(sortFragment);
+                            .show(categoryFragment);
                 }
                 break;
             case 3:
@@ -163,8 +163,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(collectionFragment != null){
             fragmentTransaction.hide(collectionFragment);
         }
-        if(sortFragment != null){
-            fragmentTransaction.hide(sortFragment);
+        if(categoryFragment != null){
+            fragmentTransaction.hide(categoryFragment);
         }
         if(settingsFragment != null){
             fragmentTransaction.hide(settingsFragment);

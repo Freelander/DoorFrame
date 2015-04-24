@@ -2,4 +2,6 @@
 <resources>
     <color name="tab_blue_text">@android:color/holo_blue_dark</color>
     <color name="tab_white_text">@android:color/white</color>
+
+    <color name="actionbar_bg">@android:color/holo_blue_dark</color>
 </resources>

@@ -44,17 +44,29 @@ public class HotFragment extends Fragment {
     private HorizontalScrollViewAdapter horizontalScrollViewAdapter,horizontalScrollViewAdapter1;
     private ImageView doorImage,doorFrameImage;
     private Integer[] doorPicIds = {
-            R.drawable.ic_door,R.drawable.ic_door,
-            R.drawable.ic_door,R.drawable.ic_door,
-            R.drawable.ic_door,R.drawable.ic_door,
+            R.drawable.ic_door,R.drawable.ic_door_brown,
+            R.drawable.ic_door_red,R.drawable.ic_door,
+            R.drawable.ic_door_brown,R.drawable.ic_door_brown,
+            R.drawable.ic_door_brown,R.drawable.ic_door_brown,
+            R.drawable.ic_door_brown,R.drawable.ic_door_brown,
+            R.drawable.ic_door_brown,R.drawable.ic_door_brown,
+            R.drawable.ic_door_red,R.drawable.ic_door_red,
+            R.drawable.ic_door_red,R.drawable.ic_door_red,
+            R.drawable.ic_door_red,R.drawable.ic_door_red,
             R.drawable.ic_door,R.drawable.ic_door,
             R.drawable.ic_door,R.drawable.ic_door,
             R.drawable.ic_door,R.drawable.ic_door
 
     };
     private Integer[] doorFramePicIds = {
-            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
-            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame,R.drawable.ic_door_frame_red,
+            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame,
+            R.drawable.ic_door_frame_red,R.drawable.ic_door_frame_red,
+            R.drawable.ic_door_frame_red,R.drawable.ic_door_frame_red,
+            R.drawable.ic_door_frame_red,R.drawable.ic_door_frame_red,
+            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
+            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
+            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
             R.drawable.ic_door_frame,R.drawable.ic_door_frame,
             R.drawable.ic_door_frame,R.drawable.ic_door_frame,
             R.drawable.ic_door_frame,R.drawable.ic_door_frame,
@@ -230,21 +242,23 @@ public class HotFragment extends Fragment {
     //MyHorizontalScroollView 监听事件
     public void MyHorizontalScrollViewListener(){
 
-//        doorFrameHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
-//            @Override
-//            public void onCurrentImgChanged(int position, View viewIndicator) {
-////                doorFrameImage.setImageResource(doorFramePicIds[position]);
-////                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);//设置图片为透明的
-//            }
-//        });
+        //滚动回调
+        doorFrameHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
+            @Override
+            public void onCurrentImgChanged(int position, View viewIndicator) {
+//                doorFrameImage.setImageResource(doorFramePicIds[position]);
+//                doorFrameImage.setBackgroundColor(Color.TRANSPARENT);//设置图片为透明的
+            }
+        });
 
-//        doorHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
-//            @Override
-//            public void onCurrentImgChanged(int position, View viewIndicator) {
-////                doorImage.setImageResource(doorPicIds[position]);
-//            }
-//        });
+        doorHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
+            @Override
+            public void onCurrentImgChanged(int position, View viewIndicator) {
+//                doorImage.setImageResource(doorPicIds[position]);
+            }
+        });
 
+        //点击回调
         doorFrameHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {

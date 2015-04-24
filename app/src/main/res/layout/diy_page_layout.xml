@@ -5,7 +5,7 @@
 
     <com.display.doorframe.ui.widget.MyHorizontalScrollView
         android:id="@+id/horizontalScrollView_top"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:gravity="top"
         android:background="@android:color/white"
@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
             </LinearLayout>
@@ -53,7 +53,7 @@
 
     <com.display.doorframe.ui.widget.MyHorizontalScrollView
         android:id="@+id/horizontalScrollView_bottom"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:gravity="bottom"
         android:background="@android:color/white"
@@ -62,7 +62,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
         </LinearLayout>

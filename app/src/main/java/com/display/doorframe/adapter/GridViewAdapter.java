@@ -1,19 +1,12 @@
 package com.display.doorframe.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-
-import com.display.doorframe.R;
-import com.display.doorframe.utils.ZoomTutorial;
 
 /**
  * Created by Jun on 2015/4/16.
@@ -82,49 +75,9 @@ public class GridViewAdapter extends BaseAdapter {
 
         imageView.setImageResource(picIds[position]);
         imageView.setTag(picIds[position]);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                //当前drawable的res的id
-//                int id = (Integer) v.getTag();
-//                setViewPagerAndZoom(imageView, id);
-//            }
-//        });
+
         return imageView;
 
     }
 
-
-
-    public void setViewPagerAndZoom(View v ,int position) {
-        //得到要放大展示的视图界面
-        ViewPager expandedView = (ViewPager)((FragmentActivity)mContext).findViewById(R.id.detail_view);
-        //最外层的容器，用来计算
-        View containerView = ((Activity)mContext).findViewById(R.id.container);
-        //实现放大缩小类，传入当前的容器和要放大展示的对象
-        ZoomTutorial mZoomTutorial = new ZoomTutorial(containerView, expandedView);
-
-        BigPicViewPagerAdapter adapter = new BigPicViewPagerAdapter(mContext,
-                largePicIds,mZoomTutorial);
-        expandedView.setAdapter(adapter);
-        expandedView.setCurrentItem(position);
-
-        // 通过传入Id来从小图片扩展到大图，开始执行动画
-        mZoomTutorial.zoomImageFromThumb(v);
-        mZoomTutorial.setOnZoomListener(new ZoomTutorial.OnZoomListener() {
-
-            @Override
-            public void onThumbed() {
-                // TODO 自动生成的方法存根
-                Log.i("DoorFrame","现在是-------------------> 小图状态");
-            }
-
-            @Override
-            public void onExpanded() {
-                // TODO 自动生成的方法存根
-                Log.i("DoorFrame","现在是-------------------> 大图状态");
-            }
-        });
-    }
 }

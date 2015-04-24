@@ -5,8 +5,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import com.display.doorframe.ui.widget.TouchImageView;
 import com.display.doorframe.utils.ZoomTutorial;
 
 /**
@@ -26,10 +26,11 @@ public class BigPicViewPagerAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup container, final int position) {
-        final ImageView imageView = new ImageView(mContext);
+//        final ImageView imageView = new ImageView(mContext);
+
+        final TouchImageView imageView = new TouchImageView(mContext);
         imageView.setImageResource(largePicIds[position]);
-        //imageView.setScaleType(ImageView.ScaleType.MATRIX);
-        //imageView.setOnTouchListener(new MulitPointTouchListener());
+
         container.addView(imageView,
                 ViewPager.LayoutParams.MATCH_PARENT,
                 ViewPager.LayoutParams.MATCH_PARENT
