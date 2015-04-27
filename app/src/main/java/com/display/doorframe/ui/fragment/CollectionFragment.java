@@ -1,9 +1,9 @@
 package com.display.doorframe.ui.fragment;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.display.doorframe.R;
 import com.display.doorframe.adapter.BigPicViewPagerAdapter;
 import com.display.doorframe.adapter.GridViewAdapter;
+import com.display.doorframe.data.ImageResource;
 import com.display.doorframe.utils.ZoomTutorial;
 
 /**
@@ -28,22 +29,16 @@ public class CollectionFragment extends Fragment {
     private ViewPager deatilView;
     private View view;
 
-    public static Integer[] picIds = {
-            R.drawable.ic_one,R.drawable.ic_two,
-            R.drawable.ic_three,R.drawable.ic_four,
-            R.drawable.ic_five,R.drawable.ic_six,
-            R.drawable.ic_seven,R.drawable.ic_eight,
-            R.drawable.ic_nine,R.drawable.ic_ten
-    };
 
-    public static Integer[] largePicIds = picIds;
+    private String[] favoriteImageFolder = ImageResource.getImageFolder(ImageResource.favoriteFolderPath);
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_collection,container,false);
 
         initView();
 
-        gridView.setAdapter(new GridViewAdapter(view.getContext(),picIds,largePicIds));
+        gridView.setAdapter(new GridViewAdapter(view.getContext(),favoriteImageFolder));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,7 +67,7 @@ public class CollectionFragment extends Fragment {
         ZoomTutorial mZoomTutorial = new ZoomTutorial(containerView, expandedView);
 
         BigPicViewPagerAdapter adapter = new BigPicViewPagerAdapter(view.getContext(),
-                largePicIds,mZoomTutorial);
+                favoriteImageFolder,mZoomTutorial);
         expandedView.setAdapter(adapter);
         expandedView.setCurrentItem(position);
 

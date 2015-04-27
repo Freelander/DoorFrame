@@ -1,6 +1,8 @@
 package com.display.doorframe.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -14,22 +16,24 @@ import com.display.doorframe.utils.ZoomTutorial;
  */
 public class BigPicViewPagerAdapter extends PagerAdapter {
 
-    private Integer[] largePicIds;
+    private String[] imagePath;
     private Context  mContext;
     private ZoomTutorial mZoomTutorial;
 
-    public BigPicViewPagerAdapter(Context mContext, Integer[] largePicIds, ZoomTutorial mZoomTutorial){
+    public BigPicViewPagerAdapter(Context mContext, String[] imagePath, ZoomTutorial mZoomTutorial){
         this.mContext = mContext;
-        this.largePicIds = largePicIds;
+        this.imagePath = imagePath;
         this.mZoomTutorial = mZoomTutorial;
     }
 
     @Override
     public View instantiateItem(ViewGroup container, final int position) {
-//        final ImageView imageView = new ImageView(mContext);
 
         final TouchImageView imageView = new TouchImageView(mContext);
-        imageView.setImageResource(largePicIds[position]);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 4;
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath[position],opts);
+        imageView.setImageBitmap(bitmap);
 
         container.addView(imageView,
                 ViewPager.LayoutParams.MATCH_PARENT,
@@ -54,7 +58,7 @@ public class BigPicViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return largePicIds.length;
+        return imagePath.length;
     }
 
     @Override

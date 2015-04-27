@@ -11,6 +11,7 @@ import android.widget.GridView;
 import com.display.doorframe.R;
 import com.display.doorframe.adapter.BigPicViewPagerAdapter;
 import com.display.doorframe.adapter.GridViewAdapter;
+import com.display.doorframe.data.ImageResource;
 import com.display.doorframe.utils.ZoomTutorial;
 
 /**
@@ -20,39 +21,25 @@ public class ImageActivity extends BaseActivity {
 
     private GridView gridView;
 
-    private Integer[] doorWcPic = {
-            R.drawable.ic_door,R.drawable.ic_door,
-            R.drawable.ic_door,R.drawable.ic_door,
-    };
-    private Integer[] doorBathRoomPic = {
-            R.drawable.ic_door_red,R.drawable.ic_door_red,
-            R.drawable.ic_door_red,R.drawable.ic_door_red,
-    };
-    private Integer[] doorBedRoomPic = {
-            R.drawable.ic_door_brown,R.drawable.ic_door_brown,
-            R.drawable.ic_door_brown,R.drawable.ic_door_brown,
-    };
-    private Integer[] doorHallPic = {
-            R.drawable.ic_door_red,R.drawable.ic_door_red,
-            R.drawable.ic_door_red,R.drawable.ic_door_red,
-    };
 
-    private Integer[] frameWcPic = {
-            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
-            R.drawable.ic_door_frame,R.drawable.ic_door_frame,
-    };
-    private Integer[] frameBathRoomPic = {
-            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
-            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
-    };
-    private Integer[] frameBedRoomPic = {
-            R.drawable.ic_door_frame_red,R.drawable.ic_door_frame_red,
-            R.drawable.ic_door_frame_red,R.drawable.ic_door_frame_red,
-    };
-    private Integer[] frameHallPic = {
-            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
-            R.drawable.ic_door_frame_yellow,R.drawable.ic_door_frame_yellow,
-    };
+    private String[] doorWcFolder = ImageResource.
+            getImageFolder(ImageResource.categoryDoorWcFolderPath);
+    private String[] doorBathRoomFolder = ImageResource.
+            getImageFolder(ImageResource.categoryDoorBathRoomFolderPath);
+    private String[] doorBedRoomFolder = ImageResource.
+            getImageFolder(ImageResource.categoryDoorBedRoomFolderPath);
+    private String[] doorHallFolder = ImageResource.
+            getImageFolder(ImageResource.categoryDoorHallFolderPath);
+
+    private String[] frameWcFolder = ImageResource.
+            getImageFolder(ImageResource.categoryFrameWcFolderPath);
+    private String[] frameBathRoomFolder = ImageResource.
+            getImageFolder(ImageResource.categoryFrameBathRoomFolderPath);
+    private String[] frameBedRoomFolder = ImageResource.
+            getImageFolder(ImageResource.categoryFrameBedRoomFolderPath);
+    private String[] frameHallFolder = ImageResource.
+            getImageFolder(ImageResource.categoryFrameHallFolderPath);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,54 +56,104 @@ public class ImageActivity extends BaseActivity {
         if(mainMenu.equals("door")){//门
             switch (secondMenu){
                 case "wc":
-                    adapter = new GridViewAdapter(this,doorWcPic,doorWcPic);
+                    initToolbar("厕所门");
+                    adapter = new GridViewAdapter(this,doorWcFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,doorWcFolder);
+                        }
+                    });
                     break;
                 case "bathroom":
-                    adapter = new GridViewAdapter(this,doorBathRoomPic,doorBathRoomPic);
+                    initToolbar("浴室门");
+                    adapter = new GridViewAdapter(this,doorBathRoomFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,doorBathRoomFolder);
+                        }
+                    });
                     break;
                 case "bedroom":
-                    adapter = new GridViewAdapter(this,doorBedRoomPic,doorBedRoomPic);
+                    initToolbar("卧室门");
+                    adapter = new GridViewAdapter(this,doorBedRoomFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,doorBedRoomFolder);
+                        }
+                    });
                     break;
                 case "hall":
-                    adapter = new GridViewAdapter(this,doorHallPic,doorHallPic);
+                    initToolbar("大厅门");
+                    adapter = new GridViewAdapter(this,doorHallFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,doorHallFolder);
+                        }
+                    });
                     break;
             }
         }else{//门框
             switch (secondMenu){
                 case "wc":
-                    adapter = new GridViewAdapter(this,frameWcPic,frameWcPic);
+                    initToolbar("厕所门框");
+                    adapter = new GridViewAdapter(this,frameWcFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,frameWcFolder);
+                        }
+                    });
                     break;
                 case "bathroom":
-                    adapter = new GridViewAdapter(this,frameBathRoomPic,frameBathRoomPic);
+                    initToolbar("浴室门框");
+                    adapter = new GridViewAdapter(this,frameBathRoomFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,frameBathRoomFolder);
+                        }
+                    });
                     break;
                 case "bedroom":
-                    adapter = new GridViewAdapter(this,frameBedRoomPic,frameBedRoomPic);
+                    initToolbar("卧室门框");
+                    adapter = new GridViewAdapter(this,frameBedRoomFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,frameBedRoomFolder);
+                        }
+                    });
                     break;
                 case "hall":
-                    adapter = new GridViewAdapter(this,frameHallPic,frameHallPic);
+                    initToolbar("大厅门框");
+                    adapter = new GridViewAdapter(this,frameHallFolder);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            setViewPagerAndZoom(view,position,frameBedRoomFolder);
+                        }
+                    });
                     break;
             }
 
         }
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setViewPagerAndZoom(view,position);
-            }
-        });
     }
 
-    //图片放大处理
-    public void setViewPagerAndZoom(View v ,int position) {
+//    //图片放大处理
+    public void setViewPagerAndZoom(View v ,int position, String[] imagePath) {
         //得到要放大展示的视图界面
         ViewPager expandedView = (ViewPager) this.findViewById(R.id.detail_view);
         //最外层的容器，用来计算
@@ -125,7 +162,7 @@ public class ImageActivity extends BaseActivity {
         ZoomTutorial mZoomTutorial = new ZoomTutorial(containerView, expandedView);
 
         BigPicViewPagerAdapter adapter = new BigPicViewPagerAdapter(this,
-                doorWcPic,mZoomTutorial);
+                imagePath,mZoomTutorial);
         expandedView.setAdapter(adapter);
         expandedView.setCurrentItem(position);
 
@@ -142,7 +179,7 @@ public class ImageActivity extends BaseActivity {
             @Override
             public void onExpanded() {
                 // TODO 自动生成的方法存根
-                Log.i("DoorFrame","现在是-------------------> 大图状态");
+                Log.i("DoorFrame", "现在是-------------------> 大图状态");
             }
         });
     }

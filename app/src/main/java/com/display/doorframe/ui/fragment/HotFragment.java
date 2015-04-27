@@ -21,6 +21,7 @@ import com.display.doorframe.adapter.BigPicViewPagerAdapter;
 import com.display.doorframe.adapter.GridViewAdapter;
 import com.display.doorframe.adapter.HorizontalScrollViewAdapter;
 import com.display.doorframe.adapter.ViewPagerAdapter;
+import com.display.doorframe.data.ImageResource;
 import com.display.doorframe.ui.widget.MyHorizontalScrollView;
 import com.display.doorframe.utils.ZoomTutorial;
 
@@ -76,16 +77,7 @@ public class HotFragment extends Fragment {
 
     private View pager1,pager2;
 
-    public static Integer[] hotPicIds = {
-            R.drawable.ic_hot_one,R.drawable.ic_hot_two,
-            R.drawable.ic_hot_three,R.drawable.ic_hot_four,
-            R.drawable.ic_hot_five,R.drawable.ic_hot_six,
-            R.drawable.ic_hot_seven,R.drawable.ic_hot_eight,
-            R.drawable.ic_hot_nine,R.drawable.ic_hot_ten
-    };
-
-    public static Integer[] hotLargePicIds = hotPicIds;
-
+    private String[] hotImageFolder = ImageResource.getImageFolder(ImageResource.hotFolderPath);
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,7 +100,7 @@ public class HotFragment extends Fragment {
         viewPager.setOnPageChangeListener(new ViewPagerChangeListener());
 
         gridView = (GridView) pager1.findViewById(R.id.hot_gv);
-        gridView.setAdapter(new GridViewAdapter(view.getContext(),hotPicIds,hotLargePicIds));
+        gridView.setAdapter(new GridViewAdapter(view.getContext(),hotImageFolder));
 
         //GridView Item 点击监听事件
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,7 +137,7 @@ public class HotFragment extends Fragment {
         ZoomTutorial mZoomTutorial = new ZoomTutorial(containerView, expandedView);
 
         BigPicViewPagerAdapter adapter = new BigPicViewPagerAdapter(pager1.getContext(),
-                hotLargePicIds,mZoomTutorial);
+                hotImageFolder,mZoomTutorial);
         expandedView.setAdapter(adapter);
         expandedView.setCurrentItem(position);
 

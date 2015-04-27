@@ -1,6 +1,8 @@
 package com.display.doorframe.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +22,11 @@ public class GridViewAdapter extends BaseAdapter {
 
     private Integer[] picIds, largePicIds;
 
-//    private Integer[] mDrawableId={
-//            R.drawable.ic_one,R.drawable.ic_two,
-//            R.drawable.ic_three,R.drawable.ic_four,
-//            R.drawable.ic_five,R.drawable.ic_six,
-//            R.drawable.ic_seven,R.drawable.ic_eight,
-//            R.drawable.ic_nine,R.drawable.ic_ten,
-//
-//    };
+    private String[] imagePath;//图片路径
 
-    public GridViewAdapter(Context mContext){
+    public GridViewAdapter(Context mContext,String[] imagePath){
         this.mContext = mContext;
+        this.imagePath = imagePath;
         this.mLayoutInflater = LayoutInflater.from(mContext);
     }
     public GridViewAdapter(Context mContext, Integer[] picIds, Integer[] largePicIds){
@@ -42,7 +38,7 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return picIds.length;
+        return imagePath.length;
     }
 
     @Override
@@ -64,18 +60,22 @@ public class GridViewAdapter extends BaseAdapter {
             imageView = new ImageView(mContext);
             // 这里的scaleType是CENTER_CROP
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ////设置ImageView宽高
+            //设置ImageView宽高
             imageView.setLayoutParams(new GridView.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, 200));
 
         }else{
             imageView = (ImageView)convertView;
-
         }
 
-        imageView.setImageResource(picIds[position]);
-        imageView.setTag(picIds[position]);
+//        imageView.setImageResource(picIds[position]);
+//        imageView.setTag(picIds[position]);
 
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 4;//图片宽高都为原来的二分之一，即图片为原来的四分之一
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath[position],opts);
+        imageView.setImageBitmap(bitmap);
+        imageView.setTag(bitmap);
         return imageView;
 
     }
