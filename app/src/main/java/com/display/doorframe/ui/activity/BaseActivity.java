@@ -2,7 +2,6 @@ package com.display.doorframe.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,8 +25,6 @@ public class BaseActivity extends ActionBarActivity {
     public void initToolbar(String title){
         toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setNavigationIcon(R.drawable.ic_action_back);
         this.setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

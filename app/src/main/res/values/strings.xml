@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DoorFrame</string>
+    <string name="app_name">RingDoor</string>
 
     <string name="tab_hot">热门</string>
     <string name="tab_diy">DIY</string>

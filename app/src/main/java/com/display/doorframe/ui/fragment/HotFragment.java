@@ -2,6 +2,9 @@ package com.display.doorframe.ui.fragment;
 
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -23,6 +26,7 @@ import com.display.doorframe.adapter.HorizontalScrollViewAdapter;
 import com.display.doorframe.adapter.ViewPagerAdapter;
 import com.display.doorframe.data.ImageResource;
 import com.display.doorframe.ui.widget.MyHorizontalScrollView;
+import com.display.doorframe.utils.FileUtil;
 import com.display.doorframe.utils.ZoomTutorial;
 
 import java.util.ArrayList;
@@ -43,7 +47,7 @@ public class HotFragment extends Fragment {
 
     private MyHorizontalScrollView doorHorizontalScrollView,doorFrameHorizontalScrollView;
     private HorizontalScrollViewAdapter horizontalScrollViewAdapter,horizontalScrollViewAdapter1;
-    private ImageView doorImage,doorFrameImage;
+    private ImageView doorImage,doorFrameImage,collectionIamge;
     private Integer[] doorPicIds = {
             R.drawable.ic_door,R.drawable.ic_door_brown,
             R.drawable.ic_door_red,R.drawable.ic_door,
@@ -77,6 +81,7 @@ public class HotFragment extends Fragment {
 
     private View pager1,pager2;
 
+    //获取所有热门图片在sdcard位置路径名称
     private String[] hotImageFolder = ImageResource.getImageFolder(ImageResource.hotFolderPath);
 
     @Override
@@ -123,6 +128,28 @@ public class HotFragment extends Fragment {
         horizontalScrollViewAdapter1 = new HorizontalScrollViewAdapter(view.getContext(),doorPicIds);
         doorHorizontalScrollView.initDatas(horizontalScrollViewAdapter1);
         MyHorizontalScrollViewListener();
+
+        collectionIamge = (ImageView) pager2.findViewById(R.id.collection_btn);
+        collectionIamge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable doorDrawable = doorImage.getDrawable();
+                Drawable frameDrawable = doorFrameImage.getDrawable();
+                Bitmap doorBitmap = ((BitmapDrawable)doorDrawable).getBitmap();
+                if(frameDrawable == null){//如果用户没有选择门框
+                    Toast.makeText(view.getContext(),"请选择门框",Toast.LENGTH_SHORT).show();
+                    return;//跳出
+                }
+                Bitmap frameBitmap = ((BitmapDrawable)frameDrawable).getBitmap();
+                boolean result = FileUtil.saveBitmap(FileUtil.toConformBitmap(doorBitmap,frameBitmap),
+                        ImageResource.favoriteFolderPath);
+                if(result){//收藏成功
+                    collectionIamge.setImageResource(R.drawable.ic_fa_star_o_1);
+                }else{
+                    Toast.makeText(view.getContext(),"收藏失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return view;
     }
@@ -234,6 +261,7 @@ public class HotFragment extends Fragment {
     //MyHorizontalScroollView 监听事件
     public void MyHorizontalScrollViewListener(){
 
+
         //滚动回调
         doorFrameHorizontalScrollView.setCurrentImageChangeListener(new MyHorizontalScrollView.CurrentImageChangeListener() {
             @Override
@@ -254,8 +282,8 @@ public class HotFragment extends Fragment {
         doorFrameHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
+                collectionIamge.setImageResource(R.drawable.ic_fa_star_o);
                 doorFrameImage.setImageResource(doorFramePicIds[position]);
-
                 Toast.makeText(view.getContext(),"点击门框"+position+"",Toast.LENGTH_SHORT).show();
             }
         });
@@ -264,6 +292,7 @@ public class HotFragment extends Fragment {
         doorHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
+                collectionIamge.setImageResource(R.drawable.ic_fa_star_o);
                 doorImage.setImageResource(doorPicIds[position]);
                 Toast.makeText(view.getContext(),"点击门"+position+"",Toast.LENGTH_SHORT).show();
             }

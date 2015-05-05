@@ -3,8 +3,10 @@ package com.display.doorframe.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.display.doorframe.adapter.GridViewAdapter;
 import com.display.doorframe.data.ImageResource;
 import com.display.doorframe.utils.ZoomTutorial;
 
+
 /**
  * Created by Jun on 2015/4/15.
  */
@@ -28,6 +31,7 @@ public class CollectionFragment extends Fragment {
     private GridView gridView;
     private ViewPager deatilView;
     private View view;
+    private SwipeRefreshLayout mSwipeLayout;
 
 
     private String[] favoriteImageFolder = ImageResource.getImageFolder(ImageResource.favoriteFolderPath);
@@ -45,6 +49,27 @@ public class CollectionFragment extends Fragment {
                 setViewPagerAndZoom(view,position);
             }
         });
+
+        /**
+         * 刷新控件
+         */
+        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_blue_dark, android.R.color.holo_orange_light,
+                android.R.color.holo_green_dark);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeLayout.setRefreshing(false);
+
+                        gridView.setAdapter(new GridViewAdapter(view.getContext(),
+                                ImageResource.getImageFolder(ImageResource.favoriteFolderPath)));
+                    }
+                },1000);
+            }
+        });
         return view;
     }
 
@@ -55,6 +80,8 @@ public class CollectionFragment extends Fragment {
 
         gridView = (GridView) view.findViewById(R.id.collection_gv);
         deatilView = (ViewPager) view.findViewById(R.id.detail_view);
+
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_collection);
     }
 
     //图片放大处理

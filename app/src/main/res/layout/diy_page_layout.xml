@@ -26,28 +26,40 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/door_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/sort_door_frame"/>
-        <ImageView
-            android:id="@+id/door_frame_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/sort_door"/>
-        <!--<ImageView-->
+            <ImageView
+                android:id="@+id/collection_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:src="@drawable/ic_fa_star_o"/>
+
+            <ImageView
+                android:id="@+id/door_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/sort_door_frame"/>
+            <ImageView
+                android:id="@+id/door_frame_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/sort_door"/>
+            <!--<ImageView-->
             <!--android:id="@+id/diy_img"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
             <!--android:layout_margin="10dp"-->
             <!--android:scaleType="fitCenter"-->
             <!--android:contentDescription="@string/tab_diy"/>-->
+            </RelativeLayout>
+
 
         </FrameLayout>
 
