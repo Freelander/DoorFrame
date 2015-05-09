@@ -23,4 +23,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/nineoldandroids-2.4.0.jar')
+
+    compile 'com.squareup.picasso:picasso:2.4.0'
 }

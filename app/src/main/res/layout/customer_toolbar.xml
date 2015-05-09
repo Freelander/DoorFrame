@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/actionbar_bg">
+
+    <ImageView
+        android:id="@+id/action_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_action_back"
+        android:contentDescription="@string/action_back"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/action_back"
+        android:layout_centerVertical="true"
+        android:id="@+id/action_bar_title"
+        android:text="@string/hot_settings"
+        android:textSize="18sp"
+        android:textColor="@color/tab_white_text"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:id="@+id/action_delete_btn"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/action_btn"
+        android:text="@string/action_delete"
+        android:textSize="14sp"
+        android:textColor="@color/tab_white_text"/>
+
+
+</RelativeLayout>

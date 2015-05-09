@@ -34,7 +34,6 @@ public class CollectionFragment extends Fragment {
     private SwipeRefreshLayout mSwipeLayout;
 
 
-    private String[] favoriteImageFolder = ImageResource.getImageFolder(ImageResource.favoriteFolderPath);
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +41,8 @@ public class CollectionFragment extends Fragment {
 
         initView();
 
-        gridView.setAdapter(new GridViewAdapter(view.getContext(),favoriteImageFolder));
+        gridView.setAdapter(new GridViewAdapter(view.getContext(),
+                ImageResource.getImageFolder(ImageResource.favoriteFolderPath)));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -63,7 +63,6 @@ public class CollectionFragment extends Fragment {
                     @Override
                     public void run() {
                         mSwipeLayout.setRefreshing(false);
-
                         gridView.setAdapter(new GridViewAdapter(view.getContext(),
                                 ImageResource.getImageFolder(ImageResource.favoriteFolderPath)));
                     }
@@ -94,7 +93,7 @@ public class CollectionFragment extends Fragment {
         ZoomTutorial mZoomTutorial = new ZoomTutorial(containerView, expandedView);
 
         BigPicViewPagerAdapter adapter = new BigPicViewPagerAdapter(view.getContext(),
-                favoriteImageFolder,mZoomTutorial);
+                ImageResource.getImageFolder(ImageResource.favoriteFolderPath),mZoomTutorial);
         expandedView.setAdapter(adapter);
         expandedView.setCurrentItem(position);
 

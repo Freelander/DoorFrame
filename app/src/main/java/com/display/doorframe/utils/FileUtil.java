@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -60,6 +61,12 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 将门Bitmap和门框Bitmap整合成一个完整Bitmap
+     * @param doorBitmap
+     * @param frameBitmap
+     * @return
+     */
     public static Bitmap toConformBitmap(Bitmap doorBitmap, Bitmap frameBitmap){
         int doorWidth = doorBitmap.getWidth();
         int doorHeight = doorBitmap.getHeight();
@@ -179,5 +186,22 @@ public class FileUtil {
             return false;
         }
     }
+
+    public static boolean deleteImageFile(ArrayList<String> mSelectorImage){
+        boolean result = false;
+        for (int i=0; i < mSelectorImage.size(); i++){
+            File imageFile = new File(mSelectorImage.get(i));
+            if(imageFile.exists()){
+                if (imageFile.delete()){
+                    result = true;
+                }else{
+                    Log.i("TAG","删除失败");
+                }
+            }
+        }
+        return result;
+    }
+
+
 
 }

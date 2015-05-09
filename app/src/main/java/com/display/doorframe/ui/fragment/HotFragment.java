@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +46,11 @@ public class HotFragment extends Fragment {
     private LinearLayout hotTextBg,diyTextBg;
     private View view;
     private GridView gridView;
+    private SwipeRefreshLayout mSwipeLayout;
 
     private MyHorizontalScrollView doorHorizontalScrollView,doorFrameHorizontalScrollView;
     private HorizontalScrollViewAdapter horizontalScrollViewAdapter,horizontalScrollViewAdapter1;
-    private ImageView doorImage,doorFrameImage,collectionIamge;
+    private ImageView doorImage,doorFrameImage,collectionImage;
     private Integer[] doorPicIds = {
             R.drawable.ic_door,R.drawable.ic_door_brown,
             R.drawable.ic_door_red,R.drawable.ic_door,
@@ -86,12 +89,10 @@ public class HotFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
        //获取布局的填充者
         view = inflater.inflate(R.layout.fragment_hot,container,false);
-
-        //初始化组件
-        initView();
-
         //将两个个view动态地添加到Adapter对象中
         viewList = new ArrayList<>();
 
@@ -99,14 +100,17 @@ public class HotFragment extends Fragment {
         pager2 = inflater.inflate(R.layout.diy_page_layout,null);
         viewList.add(pager1);
         viewList.add(pager2);
+        viewPager = (ViewPager) view.findViewById(R.id.vPager);
         viewPager.setAdapter(new ViewPagerAdapter(viewList));
         //指向第一个页面setCurrentItem(0)
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new ViewPagerChangeListener());
 
-        gridView = (GridView) pager1.findViewById(R.id.hot_gv);
-        gridView.setAdapter(new GridViewAdapter(view.getContext(),hotImageFolder));
+        //初始化组件
+        initView();
 
+
+        gridView.setAdapter(new GridViewAdapter(view.getContext(),hotImageFolder));
         //GridView Item 点击监听事件
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -115,7 +119,29 @@ public class HotFragment extends Fragment {
             }
         });
 
+        /**
+         * 刷新控件
+         */
+        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_blue_dark, android.R.color.holo_orange_light,
+                android.R.color.holo_green_dark);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeLayout.setRefreshing(false);
+                        gridView.setAdapter(new GridViewAdapter(view.getContext(),
+                                ImageResource.getImageFolder(ImageResource.hotFolderPath)));
+                    }
+                },1000);
+            }
+        });
 
+        /**
+         * DIY界面
+         */
         doorImage = (ImageView) pager2.findViewById(R.id.door_img);
         doorImage.setImageResource(R.drawable.ic_door);
         doorFrameImage = (ImageView) pager2.findViewById(R.id.door_frame_img);
@@ -129,8 +155,11 @@ public class HotFragment extends Fragment {
         doorHorizontalScrollView.initDatas(horizontalScrollViewAdapter1);
         MyHorizontalScrollViewListener();
 
-        collectionIamge = (ImageView) pager2.findViewById(R.id.collection_btn);
-        collectionIamge.setOnClickListener(new View.OnClickListener() {
+        /**
+         * 收藏功能实现
+         */
+        collectionImage= (ImageView) pager2.findViewById(R.id.collection_btn);
+        collectionImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Drawable doorDrawable = doorImage.getDrawable();
@@ -144,7 +173,7 @@ public class HotFragment extends Fragment {
                 boolean result = FileUtil.saveBitmap(FileUtil.toConformBitmap(doorBitmap,frameBitmap),
                         ImageResource.favoriteFolderPath);
                 if(result){//收藏成功
-                    collectionIamge.setImageResource(R.drawable.ic_fa_star_o_1);
+                    collectionImage.setImageResource(R.drawable.ic_fa_star_o_1);
                 }else{
                     Toast.makeText(view.getContext(),"收藏失败",Toast.LENGTH_SHORT).show();
                 }
@@ -154,7 +183,9 @@ public class HotFragment extends Fragment {
         return view;
     }
 
-    //图片放大处理
+    /**
+     * 图片放大处理
+     */
     public void setViewPagerAndZoom(View v ,int position) {
         //得到要放大展示的视图界面
         ViewPager expandedView = (ViewPager) pager1.findViewById(R.id.detail_view);
@@ -164,7 +195,7 @@ public class HotFragment extends Fragment {
         ZoomTutorial mZoomTutorial = new ZoomTutorial(containerView, expandedView);
 
         BigPicViewPagerAdapter adapter = new BigPicViewPagerAdapter(pager1.getContext(),
-                hotImageFolder,mZoomTutorial);
+                ImageResource.getImageFolder(ImageResource.hotFolderPath),mZoomTutorial);
         expandedView.setAdapter(adapter);
         expandedView.setCurrentItem(position);
 
@@ -186,14 +217,17 @@ public class HotFragment extends Fragment {
         });
     }
 
-    //完成View组件的初始化
+    /**
+     * 完成View组件的初始化
+     */
     public void initView(){
 
-        viewPager = (ViewPager) view.findViewById(R.id.vPager);
         hotText = (TextView) view.findViewById(R.id.tab_hot_text);
         diyText = (TextView) view.findViewById(R.id.tab_diy_text);
         hotTextBg = (LinearLayout) view.findViewById(R.id.tab_hot_bg);
         diyTextBg = (LinearLayout) view.findViewById(R.id.tab_diy_bg);
+        mSwipeLayout = (SwipeRefreshLayout) pager1.findViewById(R.id.swipe_hot);
+        gridView = (GridView) pager1.findViewById(R.id.hot_gv);
 
 
         //给两个TabTitle设置点击事件
@@ -201,7 +235,9 @@ public class HotFragment extends Fragment {
         diyText.setOnClickListener(new TabClickListener(1));
     }
 
-    //ViewPager页面滑动监听事件
+    /**
+     * ViewPager页面滑动监听事件
+     */
     public class ViewPagerChangeListener implements ViewPager.OnPageChangeListener{
 
         @Override
@@ -244,7 +280,9 @@ public class HotFragment extends Fragment {
         }
     }
 
-    //设置点击事件,点击上面文字切换页面的
+    /**
+     * 设置点击事件,点击上面文字切换页面的
+     */
     public class TabClickListener implements View.OnClickListener{
 
         private int index = 0;
@@ -258,7 +296,9 @@ public class HotFragment extends Fragment {
         }
     }
 
-    //MyHorizontalScroollView 监听事件
+    /**
+     * MyHorizontalScroollView 监听事件
+     */
     public void MyHorizontalScrollViewListener(){
 
 
@@ -282,7 +322,7 @@ public class HotFragment extends Fragment {
         doorFrameHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                collectionIamge.setImageResource(R.drawable.ic_fa_star_o);
+                collectionImage.setImageResource(R.drawable.ic_fa_star_o);
                 doorFrameImage.setImageResource(doorFramePicIds[position]);
                 Toast.makeText(view.getContext(),"点击门框"+position+"",Toast.LENGTH_SHORT).show();
             }
@@ -292,7 +332,7 @@ public class HotFragment extends Fragment {
         doorHorizontalScrollView.setOnItemClickListener(new MyHorizontalScrollView.OnItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                collectionIamge.setImageResource(R.drawable.ic_fa_star_o);
+                collectionImage.setImageResource(R.drawable.ic_fa_star_o);
                 doorImage.setImageResource(doorPicIds[position]);
                 Toast.makeText(view.getContext(),"点击门"+position+"",Toast.LENGTH_SHORT).show();
             }

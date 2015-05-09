@@ -1,6 +1,7 @@
 package com.display.doorframe.ui.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.display.doorframe.R;
+import com.display.doorframe.ui.activity.CategoryActivity;
+import com.display.doorframe.ui.activity.ImageSelectorActivity;
 
 /**
  * Created by Jun on 2015/4/15.
@@ -21,12 +23,14 @@ public class SettingsFragment extends Fragment {
 
     private ListView lvSettings;
     private View view;
+    private Intent intent;
 
     private String[] value = new String[]{
             "热门区设置",
             "收藏区设置",
             "图片设置"
     };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,13 +47,19 @@ public class SettingsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0 :
-                        Toast.makeText(view.getContext(),"热门区设置",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(view.getContext(), ImageSelectorActivity.class);
+                        intent.putExtra("settings_name","hotSetting");
+                        startActivity(intent);
                         break;
                     case 1:
-                        Toast.makeText(view.getContext(),"收藏区设置",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(view.getContext(), ImageSelectorActivity.class);
+                        intent.putExtra("settings_name","collectionSetting");
+                        startActivity(intent);
                         break;
                     case 2:
-                        Toast.makeText(view.getContext(),"图片设置",Toast.LENGTH_SHORT).show();
+                        intent = new Intent(view.getContext(), CategoryActivity.class);
+                        intent.putExtra("category","picSettings");
+                        startActivity(intent);
                         break;
                 }
             }

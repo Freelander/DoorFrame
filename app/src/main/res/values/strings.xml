@@ -16,4 +16,7 @@
     <string name="tab_sort">分类</string>
     <string name="sort_door">门</string>
     <string name="sort_door_frame">门框</string>
+
+    <string name="action_back">返回</string>
+    <string name="action_delete">删除</string>
 </resources>
