@@ -3,6 +3,8 @@ package com.display.doorframe.data;
 import com.display.doorframe.R;
 import com.display.doorframe.utils.FileUtil;
 
+import java.util.Arrays;
+
 /**
  * Created by Jun on 2015/4/26.
  */
@@ -153,6 +155,27 @@ public class ImageResource {
             imageFolder[i] = folderPath + imageName[i];
         }
         return imageFolder;
+    }
+
+    /**
+     * 合并多个图片路径数组
+     * @param first
+     * @param rest
+     * @param <T>
+     * @return
+     */
+    public static <T> T[] concatImagePath(T[] first, T[]... rest) {
+        int totalLength = first.length;
+        for (T[] array : rest) {
+            totalLength += array.length;
+        }
+        T[] result = Arrays.copyOf(first, totalLength);
+        int offset = first.length;
+        for (T[] array : rest) {
+            System.arraycopy(array, 0, result, offset, array.length);
+            offset += array.length;
+        }
+        return result;
     }
 
 }

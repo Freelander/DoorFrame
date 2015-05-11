@@ -174,6 +174,7 @@ public class HotFragment extends Fragment {
                         ImageResource.favoriteFolderPath);
                 if(result){//收藏成功
                     collectionImage.setImageResource(R.drawable.ic_fa_star_o_1);
+                    Toast.makeText(view.getContext(),"收藏成功",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(view.getContext(),"收藏失败",Toast.LENGTH_SHORT).show();
                 }
@@ -324,7 +325,6 @@ public class HotFragment extends Fragment {
             public void onClick(View view, int position) {
                 collectionImage.setImageResource(R.drawable.ic_fa_star_o);
                 doorFrameImage.setImageResource(doorFramePicIds[position]);
-                Toast.makeText(view.getContext(),"点击门框"+position+"",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -334,7 +334,6 @@ public class HotFragment extends Fragment {
             public void onClick(View view, int position) {
                 collectionImage.setImageResource(R.drawable.ic_fa_star_o);
                 doorImage.setImageResource(doorPicIds[position]);
-                Toast.makeText(view.getContext(),"点击门"+position+"",Toast.LENGTH_SHORT).show();
             }
         });
 

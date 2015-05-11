@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -18,6 +19,7 @@ import com.display.doorframe.adapter.ImageSelectorGridAdapter;
 import com.display.doorframe.data.ImageResource;
 import com.display.doorframe.utils.FileUtil;
 import com.display.doorframe.utils.ZoomTutorial;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -128,68 +130,128 @@ public class ImageSelectorActivity extends BaseActivity  {
                     }
                 });
                 break;
-//            case "frame":
-//                adapter = new ImageSelectorGridAdapter(ImageSelectorActivity.this,
-//                        ImageResource.getImageFolder(ImageResource.door));
-//                imageSelectorGv.setAdapter(adapter);
-//                /**
-//                 * 删除按钮
-//                 */
-//                deleteBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mSelectorImage = ImageSelectorGridAdapter.getArrayList();
-//                        if(mSelectorImage == null){
-//                            Toast.makeText(ImageSelectorActivity.this, "请选择要删除的图片",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            boolean result = FileUtil.deleteImageFile(mSelectorImage);
-//                            if(result){
-//                                imageSelectorGv.setAdapter(new ImageSelectorGridAdapter(
-//                                        ImageSelectorActivity.this,
-//                                        ImageResource.getImageFolder((ImageResource.favoriteFolderPath))
-//                                ));
-//                            }else{
-//                                Toast.makeText(ImageSelectorActivity.this,"删除失败",
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }
-//                });
-//                break;
-//            case "door":
-//                adapter = new ImageSelectorGridAdapter(ImageSelectorActivity.this,
-//                        ImageResource.getImageFolder(ImageResource.favoriteFolderPath));
-//                imageSelectorGv.setAdapter(adapter);
-//                /**
-//                 * 删除按钮
-//                 */
-//                deleteBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mSelectorImage = ImageSelectorGridAdapter.getArrayList();
-//                        if(mSelectorImage == null){
-//                            Toast.makeText(ImageSelectorActivity.this, "请选择要删除的图片",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            boolean result = FileUtil.deleteImageFile(mSelectorImage);
-//                            if(result){
-//                                imageSelectorGv.setAdapter(new ImageSelectorGridAdapter(
-//                                        ImageSelectorActivity.this,
-//                                        ImageResource.getImageFolder((ImageResource.favoriteFolderPath))
-//                                ));
-//                            }else{
-//                                Toast.makeText(ImageSelectorActivity.this,"删除失败",
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }
-//                });
-//                break;
+            case "frame":
+                /**
+                 * 合并门框四大类图片路径
+                 */
+                final String[] imageFramePath = ImageResource.concatImagePath(
+                        ImageResource.getImageFolder(ImageResource.categoryFrameWcFolderPath) ,
+                        ImageResource.getImageFolder(ImageResource.categoryFrameBathRoomFolderPath) ,
+                        ImageResource.getImageFolder(ImageResource.categoryFrameBedRoomFolderPath) ,
+                        ImageResource.getImageFolder(ImageResource.categoryFrameHallFolderPath));
+
+                adapter = new ImageSelectorGridAdapter(ImageSelectorActivity.this,
+                        imageFramePath);
+                imageSelectorGv.setAdapter(adapter);
+                /**
+                 * 删除按钮
+                 */
+                deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSelectorImage = ImageSelectorGridAdapter.getArrayList();
+                        if(mSelectorImage == null){
+                            Toast.makeText(ImageSelectorActivity.this, "请选择要删除的图片",
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+                            boolean result = FileUtil.deleteImageFile(mSelectorImage);
+                            if(result){
+                                //更新数据
+                                String[] imageFramePath = ImageResource.concatImagePath(
+                                        ImageResource.getImageFolder(ImageResource.categoryFrameWcFolderPath) ,
+                                        ImageResource.getImageFolder(ImageResource.categoryFrameBathRoomFolderPath) ,
+                                        ImageResource.getImageFolder(ImageResource.categoryFrameBedRoomFolderPath) ,
+                                        ImageResource.getImageFolder(ImageResource.categoryFrameHallFolderPath)
+                                );
+                                imageSelectorGv.setAdapter(new ImageSelectorGridAdapter(
+                                        ImageSelectorActivity.this,imageFramePath));
+                            }else{
+                                Toast.makeText(ImageSelectorActivity.this,"删除失败",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+                /**
+                 * 点击监听事件
+                 */
+                imageSelectorGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        setViewPagerAndZoom(view,position,imageFramePath);
+                    }
+                });
+                break;
+            case "door":
+                /**
+                 * 合并门四大类图片路径
+                 */
+                final String[] imageDoorPath = ImageResource.concatImagePath(
+                        ImageResource.getImageFolder(ImageResource.categoryDoorWcFolderPath) ,
+                        ImageResource.getImageFolder(ImageResource.categoryDoorBathRoomFolderPath) ,
+                        ImageResource.getImageFolder(ImageResource.categoryDoorBedRoomFolderPath) ,
+                        ImageResource.getImageFolder(ImageResource.categoryDoorHallFolderPath));
+                adapter = new ImageSelectorGridAdapter(ImageSelectorActivity.this,imageDoorPath);
+                imageSelectorGv.setAdapter(adapter);
+                /**
+                 * 删除按钮
+                 */
+                deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSelectorImage = ImageSelectorGridAdapter.getArrayList();
+                        if(mSelectorImage == null){
+                            Toast.makeText(ImageSelectorActivity.this, "请选择要删除的图片",
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+                            boolean result = FileUtil.deleteImageFile(mSelectorImage);
+                            if(result){
+                                String[] imageDoorPath = ImageResource.concatImagePath(
+                                        ImageResource.getImageFolder(ImageResource.categoryDoorWcFolderPath) ,
+                                        ImageResource.getImageFolder(ImageResource.categoryDoorBathRoomFolderPath) ,
+                                        ImageResource.getImageFolder(ImageResource.categoryDoorBedRoomFolderPath) ,
+                                        ImageResource.getImageFolder(ImageResource.categoryDoorHallFolderPath));
+                                imageSelectorGv.setAdapter(new ImageSelectorGridAdapter(
+                                        ImageSelectorActivity.this,imageDoorPath));
+                            }else{
+                                Toast.makeText(ImageSelectorActivity.this,"删除失败",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+                /**
+                 * 点击监听事件
+                 */
+                imageSelectorGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        setViewPagerAndZoom(view,position,imageDoorPath);
+                    }
+                });
+                break;
 
         }
 
+        /**
+         * GridView滚动监听器
+         */
+        imageSelectorGv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                final Picasso picasso = Picasso.with(ImageSelectorActivity.this);
+                if(scrollState == SCROLL_STATE_IDLE || scrollState == SCROLL_STATE_TOUCH_SCROLL){
+                    picasso.resumeTag(ImageSelectorActivity.this);
+                }else{
+                    picasso.pauseTag(ImageSelectorActivity.this);
+                }
+            }
 
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
 
 
 
@@ -205,8 +267,6 @@ public class ImageSelectorActivity extends BaseActivity  {
 
 
     }
-
-
     /**
      * 初始化控件
      */

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Jun on 2015/5/6.
@@ -20,6 +21,10 @@ public class ImageSelectorGridAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Context mContext;
+    /**
+     * 记录下用户选中的图片，当GridView子项超出屏幕滚动时防止出现选中的图片出现混乱
+     */
+    private HashMap<String,Boolean> hashMap = new HashMap<String,Boolean>();
 
     private String[] imagePath;//图片路径
     public static ArrayList<String> mSelectorImage;//用户选择的图片路径
@@ -64,11 +69,6 @@ public class ImageSelectorGridAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-//        BitmapFactory.Options opts = new BitmapFactory.Options();
-//        opts.inSampleSize = 4;//图片宽高都为原来的二分之一，即图片为原来的四分之一
-//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath[position],opts);
-//        viewHolder.image.setImageBitmap(bitmap);
-//        viewHolder.image.setTag(bitmap);
 
         Picasso picasso = Picasso.with(mContext);
         picasso.setLoggingEnabled(true);//打开日志，即log中会打印出目前下载的进度、情况
@@ -95,11 +95,18 @@ public class ImageSelectorGridAdapter extends BaseAdapter {
                     viewHolder.indicator.setImageResource(R.drawable.btn_unselected);
                     mSelectorImage.remove(imagePath[position]);
                     viewHolder.msk.setVisibility(View.GONE);
-                    notifyDataSetChanged();
+                    /**
+                     * 剔除用户选中的图片
+                     */
+                    hashMap.remove(imagePath[position]);
                 }else{
                     viewHolder.indicator.setImageResource(R.drawable.btn_selected);
                     mSelectorImage.add(imagePath[position]);
                     viewHolder.msk.setVisibility(View.VISIBLE);
+                    /**
+                     * 将选中的放入hashmap中
+                     */
+                    hashMap.put(imagePath[position],true);
                     /**
                      * 调用notifyDataSetChanged来更新GridView填充的数据
                      */
@@ -108,13 +115,26 @@ public class ImageSelectorGridAdapter extends BaseAdapter {
             }
         });
 
+        /**
+         * 找到需要选中的条目
+         * 监听器的方法要加到初始化view中ImageView状态的代码之前
+         */
+        if(hashMap != null && hashMap.containsKey(imagePath[position])){
+            viewHolder.indicator.setImageResource(R.drawable.btn_selected);
+            viewHolder.msk.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.indicator.setImageResource(R.drawable.btn_unselected);
+            viewHolder.msk.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
 
     class ViewHolder{
         ImageView image;
-        ImageView indicator;
+       // ImageView indicator;
+       ImageView indicator;
         View msk;
 
         ViewHolder(View view){
