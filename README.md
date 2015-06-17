@@ -44,7 +44,9 @@
 ![image](https://github.com/Freelander/DoorFrame/blob/master/screenshots/category1.png) ![image](https://github.com/Freelander/DoorFrame/blob/master/screenshots/category.png)
 
 
+## 下载地址：
 
+[http://pan.baidu.com/s/1dDjgLxv](http://pan.baidu.com/s/1dDjgLxv)
 
 ##License
 
